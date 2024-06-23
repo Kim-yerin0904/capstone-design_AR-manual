@@ -83,6 +83,7 @@
   ### 4) c# 스크립트 작성
 
 조립 화면에서 버튼을 이용하여 Scene을 이동하기 그림(8)과 같이 위해 SceneManagement의 SceneManger.LoadScene을 사용하여 각 장면으로 이동할 수 있는 함수를 생성.
+
 ![image](https://github.com/Kim-yerin0904/capstone-design_AR-manual/assets/77713307/38343dae-191f-4744-a591-14cfa6e1290b)
 +화면 전환 함수
 
@@ -94,6 +95,7 @@
 
   ### 5) QR 코드 인식 기능 제작
    QR 코드는 설명서의 첫 장면의 이름인 chair_step1이라는 텍스트를 저장하여 생성하였다. QR 코든 인식은 Vuforia에서 제공하는 Barcode 기능을 사용하였다. Scene에 Vuforia Engine의 Barcode를 추가해 주고 C# 스크립트를 작성했다.
+  
 ![image](https://github.com/Kim-yerin0904/capstone-design_AR-manual/assets/77713307/c44b095a-13dc-40f5-9390-e7331b65fee4)
 + QR코드 인식 c# 스크립트
 
@@ -113,6 +115,16 @@ https://github.com/Kim-yerin0904/capstone-design_AR-manual/assets/77713307/941a7
 + QR 코드 인식 영상
 
 ### 2) 부품 인식 기능
+부품 인식 기능은 부품을 찾을 때 사용한다. 아래 영상에서는 시트 플레이트라는 부품을 찾고 있다. 카메라에 해당 부품이 비치게 되면 부품의 색이 바뀌면서 표시되어 부품을 쉽게 찾을 수 있다.
+
+https://github.com/Kim-yerin0904/capstone-design_AR-manual/assets/77713307/89ef71a6-e738-4ba4-b3c3-6f953072b755
++ 시트 플레이트 인식 영상
 
 
 ### 3) 조립 설명 기능
+
+조립 설명 기능은 부품 인식 기능으로 찾은 부품을 조립하기 위해 사용된다. 아래 영상을 보면 시트 플레이트와 시트 하단부를 조립하는 장면이다. 시트 하단부가 카메라에 비치게 되면 시트 플레이트와 나사들이 조립해야 할 위치에 증강한다. 또한 나사들이 조립 방향에 맞게 움직이며 화면만 보고 쉽게 조립할 수 있다.
+
+https://github.com/Kim-yerin0904/capstone-design_AR-manual/assets/77713307/2b07769b-8712-4f47-a498-502091ea87cb
++ 시트 하단부+시트플레이트 조립 설명 영상
+
