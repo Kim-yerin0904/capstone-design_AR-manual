@@ -65,10 +65,54 @@
 + vuforia model target generator 설정 장면
 
   ### 3) Unity에서 UI 제작 및 오브젝트와 모델 배치
+  Unity에서 조립 화면의 UI를 제작. 의자의 조립 단계는 총 11단계. 각 조립 단계별로 Scene을 만들어 관리.
+  
+  ![image](https://github.com/Kim-yerin0904/capstone-design_AR-manual/assets/77713307/ff881961-1ddf-4cc3-8804-7d34dc06907a)
++ Unity에서 제작한 2단계의 화면
 
-  ### 4) AR 콘텐츠 움직임을 위한 c# 스크립트 작성
+   화면의 상단에는 현재 단계를 알 수 있도록 표시 (2/11)
+
+  화면의 양옆에는 단계를 이동할 수 있는 버튼이 있음, 하단에는 현재 단계에 맞는 설명.
+
+   ![image](https://github.com/Kim-yerin0904/capstone-design_AR-manual/assets/77713307/e00fd5ad-07fc-4a71-98ac-fff8ceec3b72)
++ 모델과 오브젝트 배치 
+
+ 그리고 부품 인식 기능을 위해 전 단계에서 Model Target Generator로 제작한 unitypackage와 Polycam에서 다운받은 OBJ 파일을 Import. 위의 사진처럼 각 단계에 맞는 모델을 Model Target으로 Scene에 추가. 모델이 인식되면 부품의 색이 변하게 하려고 모델과 똑같은 오브젝트를 자식으로 추가하고 material을 변경. 또한 조립에 필요한 오브젝트가 증강하기 위해 증강해야 하는 부분에 부품 오브젝트를 자식으로 추가. 
+
+
+  ### 4) c# 스크립트 작성
+
+조립 화면에서 버튼을 이용하여 Scene을 이동하기 그림(8)과 같이 위해 SceneManagement의 SceneManger.LoadScene을 사용하여 각 장면으로 이동할 수 있는 함수를 생성.
+![image](https://github.com/Kim-yerin0904/capstone-design_AR-manual/assets/77713307/38343dae-191f-4744-a591-14cfa6e1290b)
++화면 전환 함수
+
+   조립 설명 기능에서 부품 오브젝트가 조립 방향에 맞게 움직이게 하기 위한 C# 스크립트를 작성. Start 함수는 처음에 한 번만 호출되는 함수이고 Update 함수는 프레임마다 호출되는 함수이다. Start 함수가 호출되면 오브젝트의 현재 local 좌표를 minY 값으로 저장한다. minY 값에서 0.3f만큼 위를 maxY 값으로 정하였다. Update 함수에서는 오브젝트의 local 좌푯값의 y축값을 일정한 거리(적절한 속도를 정해 속도 * 시간을 하여 거리를 구함)를 sign 값에 곱해 더해준다. sign 값이 +1이라면 오브젝트가 위로 올라가고, -1이라면 밑으로 내려간다. 만약 현재 오브젝트의 local 좌푯값이 minY보다 작거나 maxY보다 크다면 sign 값에 –1을 곱해 오브젝트의 이동 방향을 바꾸어 준다.
+
+  ![image](https://github.com/Kim-yerin0904/capstone-design_AR-manual/assets/77713307/c55adc00-813d-4385-b3fa-495eed86da65)
++ 오브젝트 이동 스크립트
+   
 
   ### 5) QR 코드 인식 기능 제작
+   QR 코드는 설명서의 첫 장면의 이름인 chair_step1이라는 텍스트를 저장하여 생성하였다. QR 코든 인식은 Vuforia에서 제공하는 Barcode 기능을 사용하였다. Scene에 Vuforia Engine의 Barcode를 추가해 주고 C# 스크립트를 작성했다.
+![image](https://github.com/Kim-yerin0904/capstone-design_AR-manual/assets/77713307/c44b095a-13dc-40f5-9390-e7331b65fee4)
++ QR코드 인식 c# 스크립트
 
+   화면에 띄울 텍스트와 연결하기 위해 barcodeAsText를 정의. Start 함수가 호출되면 바코드에 저장된 정보를 읽어온다. 그리고 Update 함수에서 바코드가 인식되고 바코드에 저장된 데이터가 있다면 barcodeAsText.text에 “설명서로 이동 중입니다. 잠시만 기다려 주세요.”라는 문구를 저장하고 바코드에 저장되어 있던 텍스트를 장면 전환 함수에 넣어 알맞은 장면으로 이동하도록 함.
+
+  만약 바코드가 인식되지 않으면 barcodeAsText.text에 아무 텍스트도 저장하지 않아 텍스트가 뜨지 않도록 하였다. 스크립트를 완성한 후 Scene에 barcodeAsText와 연결할 TextMeshPro를 만들어 연결하였다. 아래 사진은 QR 코드 인식 장면의 UI이다. New Text라고 되어있는 부분이 barcodeAsText와 연결되어 있다.
+
+  ![image](https://github.com/Kim-yerin0904/capstone-design_AR-manual/assets/77713307/7c841020-368e-4636-97d1-7b27c8c606f3)
++ QR 코드 인식 장면 UI
+  
 ---
 # 프로젝트 수행 결과
+### 1) QR 코드 인식 기능
+앱을 실행하면 가장 먼저 QR 코드를 인식하는 장면이 나온다. QR 코드가 화면에 비추게 되면 설명서로 이동 중입니다. 라는 문구가 뜨고 제품에 맞는 해당 설명서로 자동으로 이동하게 된다.
+
+https://github.com/Kim-yerin0904/capstone-design_AR-manual/assets/77713307/941a7843-bd5e-42ac-9894-bc22d21f17c2
++ QR 코드 인식 영상
+
+### 2) 부품 인식 기능
+
+
+### 3) 조립 설명 기능
